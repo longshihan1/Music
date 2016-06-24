@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fcf="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_250"
+    android:orientation="vertical">
+
+    <com.longshihan.lightly.music.view.NewsMusic_View
+        android:id="@+id/homepage_tools_add"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_35"
+        />
+
+    <at.technikum.mti.fancycoverflow.FancyCoverFlow
+        android:id="@+id/home_fancyCoverFlow"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        fcf:maxRotation="45"
+        fcf:scaleDownGravity="0.5"
+        fcf:unselectedAlpha="0.3"
+        fcf:unselectedSaturation="0.0"
+        fcf:unselectedScale="0.4"
+        />
+
+
+</LinearLayout>

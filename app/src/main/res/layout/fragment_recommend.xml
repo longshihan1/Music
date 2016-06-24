@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                tools:context="com.longshihan.lightly.music.fragment.RecommendFragment">
+
+    <com.longshihan.lightly.music.view.MyScrollview
+        android:id="@+id/homepage_srcollview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <com.jude.rollviewpager.RollPagerView
+                android:id="@+id/roll_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_200"
+                app:rollviewpager_play_delay="3000"/>
+
+            <include layout="@layout/newmusic"/>
+
+            <include layout="@layout/homepage_like"/>
+
+            <include layout="@layout/homepage_hotmusic"/>
+
+        </LinearLayout>
+
+    </com.longshihan.lightly.music.view.MyScrollview>
+
+    <ImageView
+        android:id="@+id/homepage_setbtn"
+        android:layout_width="@dimen/dimen_30"
+        android:layout_height="@dimen/dimen_30"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:background="@mipmap/box"
+        />
+
+</RelativeLayout>

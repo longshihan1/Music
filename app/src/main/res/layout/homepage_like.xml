@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.longshihan.lightly.music.view.NewsMusic_View
+        android:id="@+id/homepage_tools_like"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_35"
+        />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/homepage_likerecy"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

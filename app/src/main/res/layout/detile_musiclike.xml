@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/detail_musiclike_img"
+        android:layout_width="@dimen/dimen_60"
+        android:layout_height="@dimen/dimen_60"
+        android:layout_marginBottom="@dimen/dimen_5"
+        android:layout_marginLeft="@dimen/dimen_12"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:background="@mipmap/setting"/>
+
+    <TextView
+        android:id="@+id/detail_musiclike_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/detail_musiclike_img"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_toEndOf="@+id/detail_musiclike_img"
+        android:text="末日不孤单"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/detail_musiclike_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/detail_musiclike_title"
+        android:layout_below="@+id/detail_musiclike_title"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:text="李代沫"/>
+    <ImageView
+        android:id="@+id/detail_musiclike_setting"
+        android:layout_width="@dimen/dimen_30"
+        android:layout_height="@dimen/dimen_10"
+        android:background="@mipmap/more"
+        android:layout_above="@+id/detail_musiclike_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="13dp"/>
+</RelativeLayout>

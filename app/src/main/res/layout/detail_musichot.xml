@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/detail_musichot_img"
+        android:layout_width="@dimen/dimen_120"
+        android:layout_height="@dimen/dimen_120"
+        android:background="@mipmap/search_box"
+        />
+
+    <ImageView
+        android:id="@+id/detail_musichot_headset"
+        android:layout_width="@dimen/dimen_15"
+        android:layout_height="@dimen/dimen_15"
+        android:layout_alignBottom="@+id/detail_musichot_img"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_20"
+        android:background="@mipmap/headset"/>
+
+    <TextView
+        android:id="@+id/detail_musichot_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="32515123"
+        android:layout_toRightOf="@id/detail_musichot_headset"
+        android:layout_alignBottom="@id/detail_musichot_img"
+        android:layout_marginBottom="@dimen/dimen_12"
+        android:textSize="@dimen/dimen_10"
+        />
+    <TextView
+        android:id="@+id/detail_musichot_detail"
+        android:layout_width="@dimen/dimen_120"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_5"
+        android:layout_marginRight="@dimen/dimen_5"
+        android:layout_below="@id/detail_musichot_img"
+        android:layout_marginTop="@dimen/dimen_3"
+        android:text="春天第一缕阳光qweqwqwqwecw"
+        />
+</RelativeLayout>

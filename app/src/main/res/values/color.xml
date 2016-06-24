@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="lan">#6E97F5</color>
+    <color name="danlan">#9DBBFA</color>
+    <color name="hei">#333743</color>
+    <color name="danhei">#5E6987</color>
+    <color name="hong">#F91154</color>
+    <color name="qing">#76F8B4</color>
+    <color name="huang">#F7EE51</color>
+    <color name="Write">#FFFFFF</color>
+    <color name="home_notext">#FFF6F2</color>
+    <color name="home_istext">#D3A893</color>
+
+</resources>

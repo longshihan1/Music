@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="NewsMusic_View">
+        <attr name="newsmusic_textcolor" format="color"></attr>
+        <attr name="newsmusic_text" format="string"></attr>
+        <attr name="newsmusic_addtextcolor" format="color"></attr>
+        <attr name="newsmusic_addtext" format="string"></attr>
+    </declare-styleable>
+
+</resources>
