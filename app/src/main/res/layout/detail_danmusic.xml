@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_50">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/add"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/detail_danmusic_wu"/>
+
+    <TextView
+        android:id="@+id/detail_danmusic_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:text="俄懂得的"
+        android:layout_toEndOf="@+id/detail_danmusic_wu"
+        android:layout_marginTop="@dimen/dimen_10"
+        />
+
+    <TextView
+        android:id="@+id/detail_danmusic_author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:text="cwwecwec"
+        android:layout_below="@+id/detail_danmusic_title"
+        android:layout_toEndOf="@+id/detail_danmusic_wu"/>
+
+    <ImageView
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/setting_danmusic"
+        android:layout_marginEnd="16dp"
+        android:id="@+id/detail_danmusic_setting"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignParentEnd="true"/>
+
+
+</RelativeLayout>

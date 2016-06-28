@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/daogenerator" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/menudrawer" />
             <option value="$PROJECT_DIR$/menudrawer1" />
@@ -18,6 +19,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/daogenerator" />
             <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/menudrawer" />
             <option value="$PROJECT_DIR$/menudrawer1" />

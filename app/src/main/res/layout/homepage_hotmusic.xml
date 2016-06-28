@@ -10,9 +10,15 @@
         android:layout_height="@dimen/dimen_35"
         />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/homepage_hotrecy"
+    <com.longshihan.lightly.music.view.MyGridView
+        android:id="@+id/homepage_hotgrid"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="fill_parent"
+        android:columnWidth="90dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp"
+        />
 </LinearLayout>

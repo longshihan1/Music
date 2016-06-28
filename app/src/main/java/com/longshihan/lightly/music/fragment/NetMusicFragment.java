@@ -17,6 +17,12 @@ import com.longshihan.lightly.music.R;
 */
 public class NetMusicFragment extends Fragment {
 
+    public static NetMusicFragment newInstance() {
+        NetMusicFragment fragment = new NetMusicFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     public NetMusicFragment() {
         // Required empty public constructor

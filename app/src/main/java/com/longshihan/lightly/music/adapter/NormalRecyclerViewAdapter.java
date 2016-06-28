@@ -1,6 +1,7 @@
 package com.longshihan.lightly.music.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.ImageLoader;
 import com.longshihan.lightly.music.R;
-import com.longshihan.lightly.music.bean.MusicLikeBean;
+import com.longshihan.lightly.music.bean.SortbangJavabean;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import java.util.List;
 
@@ -25,9 +27,9 @@ import java.util.List;
 public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecyclerViewAdapter.MyViewHolder> {
 
     private LayoutInflater mInflater;
-    private List<MusicLikeBean> mDatas;
+    private List<SortbangJavabean.SongListBean> mDatas;
     private Context context;
-    private ImageLoader imageLoader;
+   // private ImageLoader imageLoader;
 
     public interface OnItemClickLitener {
         void onItemClick(View view, int position);
@@ -41,7 +43,7 @@ public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecycl
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
-    public NormalRecyclerViewAdapter(Context context, List<MusicLikeBean> mDatas) {
+    public NormalRecyclerViewAdapter(Context context, List<SortbangJavabean.SongListBean> mDatas) {
         this.context = context;
         this.mDatas = mDatas;
         mInflater = LayoutInflater.from(context);
@@ -50,7 +52,7 @@ public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecycl
 
     @Override
     public int getItemCount() {
-        return mDatas.size();
+        return 10;
     }
 
     //创建ViewHolder
@@ -64,11 +66,19 @@ public class NormalRecyclerViewAdapter extends RecyclerView.Adapter<NormalRecycl
     //绑定viewHolder
     @Override
     public void onBindViewHolder(final NormalRecyclerViewAdapter.MyViewHolder holder, final int position) {
-        MusicLikeBean msg=mDatas.get(position);
-        holder.itemname.setText(msg.getName());
-       // imageLoader.DisplayImage(msg.getAuthor().getAvatar(), holder.itemphoto);
-        holder.itemtitle.setText(msg.getTitle());
+        SortbangJavabean.SongListBean msg=mDatas.get(position);
+        holder.itemname.setText(msg.getAuthor());
+       // imageLoader.DisplayImage(msg.getPic_big(), holder.img);
+        ImageLoader.getInstance().loadImage(msg.getPic_small(), new SimpleImageLoadingListener(){
 
+            @Override
+            public void onLoadingComplete(String imageUri, View view,
+                                          Bitmap loadedImage) {
+                super.onLoadingComplete(imageUri, view, loadedImage);
+                holder.img.setImageBitmap(loadedImage);
+            }
+        });
+        holder.itemtitle.setText(msg.getAlbum_title());
         if (mOnItemClickLitener != null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

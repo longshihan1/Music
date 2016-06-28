@@ -1,2 +1,2 @@
-include ':app', ':menudrawer', ':menudrawer1'
+include ':app', ':menudrawer', ':menudrawer1', ':daogenerator'
 include ':library'

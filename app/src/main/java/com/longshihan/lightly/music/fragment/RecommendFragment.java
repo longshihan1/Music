@@ -4,24 +4,33 @@ package com.longshihan.lightly.music.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
 import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.hintview.ColorPointHintView;
 import com.jude.rollviewpager.hintview.IconHintView;
 import com.longshihan.lightly.music.R;
+import com.longshihan.lightly.music.adapter.HotGridViewAdapter;
 import com.longshihan.lightly.music.adapter.NormalRecyclerViewAdapter;
 import com.longshihan.lightly.music.adapter.NormalRecyclerView_GridAdapter;
 import com.longshihan.lightly.music.adapter.TestNormalAdapter;
 import com.longshihan.lightly.music.adapter.ViewGroupExampleAdapter;
 import com.longshihan.lightly.music.bean.MusicHotBean;
 import com.longshihan.lightly.music.bean.MusicLikeBean;
+import com.longshihan.lightly.music.bean.SortbangJavabean;
+import com.longshihan.lightly.music.bean.TuiJianBean;
+import com.longshihan.lightly.music.utils.http.Constant;
+import com.longshihan.lightly.music.utils.http.Net;
 import com.longshihan.lightly.music.view.FullyGridLayoutManager;
 import com.longshihan.lightly.music.view.FullyLinearLayoutManager;
 import com.longshihan.lightly.music.view.NewsMusic_View;
@@ -51,14 +60,15 @@ public class RecommendFragment extends Fragment {
     @InjectView(R.id.homepage_tools_like)
     NewsMusic_View mHomepageToolsLike;
 
-    @InjectView(R.id.homepage_hotrecy)
-    RecyclerView mHomepageHotrecy;
+
     @InjectView(R.id.homepage_setbtn)
     ImageView mHomepageSetbtn;
     @InjectView(R.id.homepage_likerecy)
     RecyclerView mHomepageLikerecy;
     @InjectView(R.id.homepage_tools_hot)
     NewsMusic_View mHomepageToolsHot;
+    @InjectView(R.id.homepage_hotgrid)
+    GridView mHomepageHotgrid;
 
     private Context context;
 
@@ -72,6 +82,18 @@ public class RecommendFragment extends Fragment {
 
     private FullyLinearLayoutManager mFullyLinearLayoutManager;
     private FullyGridLayoutManager mGridLayoutManager;
+    private List<SortbangJavabean.SongListBean> song_bean;
+    private List<TuiJianBean.ResultBean.ListBean> tui_bean;
+    private HotGridViewAdapter gridViewAdapter;
+
+
+    public static RecommendFragment newInstance() {
+        RecommendFragment fragment = new RecommendFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,12 +133,53 @@ public class RecommendFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private void initData() {
+    private Handler handler1 = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (Net.SUCCESS == msg.what) {
+                //String lits=msg.obj.toString();
+                Gson gson=new Gson();
+                SortbangJavabean sort_bean=gson.fromJson(msg.obj.toString(),SortbangJavabean.class);
+                song_bean=sort_bean.getSong_list();
+                like_adapter = new NormalRecyclerViewAdapter(context, song_bean);//一个javabean
+                ViewGroup.LayoutParams mParams = mHomepageLikerecy.getLayoutParams();
+                mParams.height = 230 * like_adapter.getItemCount();
+                mHomepageLikerecy.setLayoutParams(mParams);
+                mHomepageLikerecy.setAdapter(like_adapter);
+                mHomepageLikerecy.setNestedScrollingEnabled(false);
+            }
+        }
+    };
 
+    private Handler handler2 = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (Net.SUCCESS == msg.what) {
+                //String lits=msg.obj.toString();
+                Gson gson=new Gson();
+                TuiJianBean tuijian_bean=gson.fromJson(msg.obj.toString(),TuiJianBean.class);
+                tui_bean=tuijian_bean.getResult().getList();
+                gridViewAdapter= new HotGridViewAdapter(tui_bean, context);
+                mHomepageHotgrid.setAdapter(gridViewAdapter);
+
+
+            }
+        }
+    };
+
+
+
+    private void initData() {
+        Net.sendHttpGet(context,handler1,"like", Constant.BAIDU+Constant.BAIDU_LIST,"1","10","0");
+        Net.sendHttpGet(context,handler2,"hot", Constant.TUIJIAN,null,null,null);
 
     }
 
     private void initView() {
+        //song_bean=new ArrayList<>();
+        tui_bean=new ArrayList<>();
 
         initlunbo();
         initNewsMusic();
@@ -127,14 +190,23 @@ public class RecommendFragment extends Fragment {
     }
 
     private void initHot() {
+        mHomepageToolsAdd.setAddTestView("热门歌单");
         lmusichot = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 6; i++) {
             bean_hot = new MusicHotBean();
             bean_hot.setDetail("贵妃醉酒" + i);
             bean_hot.setNum("111111" + i);
             lmusichot.add(bean_hot);
         }
-        mGridLayoutManager = new FullyGridLayoutManager(context, 4);
+
+        //添加消息处理
+        mHomepageHotgrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+       /* mGridLayoutManager = new FullyGridLayoutManager(context, 4);
         mGridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         mGridLayoutManager.setSmoothScrollbarEnabled(true);
         mHomepageHotrecy.setLayoutManager(mGridLayoutManager);
@@ -143,13 +215,14 @@ public class RecommendFragment extends Fragment {
         mParams.height = 230 * ((hot_adaoter.getItemCount()/4)+1);
         mHomepageHotrecy.setLayoutParams(mParams);
         mHomepageHotrecy.setAdapter(hot_adaoter);
-        mHomepageHotrecy.setNestedScrollingEnabled(false);
+        mHomepageHotrecy.setNestedScrollingEnabled(false);*/
 
     }
 
     private void initLike() {
+        mHomepageToolsLike.setAddTestView("猜你喜欢");
         lmusiclike = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             bean = new MusicLikeBean();
             bean.setTitle("贵妃醉酒" + i);
             bean.setName("李玉刚" + i);
@@ -163,12 +236,7 @@ public class RecommendFragment extends Fragment {
         //        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
         // OrientationHelper.VERTICAL));//这里用线性宫格显示 类似于瀑布流
 
-        like_adapter = new NormalRecyclerViewAdapter(context, lmusiclike);//一个javabean
-        ViewGroup.LayoutParams mParams = mHomepageLikerecy.getLayoutParams();
-        mParams.height = 230 * like_adapter.getItemCount();
-        mHomepageLikerecy.setLayoutParams(mParams);
-        mHomepageLikerecy.setAdapter(like_adapter);
-        mHomepageLikerecy.setNestedScrollingEnabled(false);
+
     }
 
     /**
@@ -176,7 +244,7 @@ public class RecommendFragment extends Fragment {
      */
     private void initNewsMusic() {
         mHomepageToolsAdd.setAddTestView("最新音乐");
-        mHomeFancyCoverFlow.setAdapter(new ViewGroupExampleAdapter());
+        mHomeFancyCoverFlow.setAdapter(new ViewGroupExampleAdapter(context));
         mHomeFancyCoverFlow.setMaxRotation(45);
         mHomeFancyCoverFlow.setUnselectedAlpha(0.3f);
         mHomeFancyCoverFlow.setUnselectedSaturation(0.0f);
