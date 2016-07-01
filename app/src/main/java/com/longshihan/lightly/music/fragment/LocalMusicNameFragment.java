@@ -9,11 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.db.entity.Localmusic;
 import com.longshihan.lightly.music.R;
 import com.longshihan.lightly.music.adapter.DANMusicRecyclerViewAdapter;
 import com.longshihan.lightly.music.db.DaoManager;
 import com.longshihan.lightly.music.utils.CommonUtils;
 import com.longshihan.lightly.music.view.FullyLinearLayoutManager;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -30,16 +33,17 @@ public class LocalMusicNameFragment extends Fragment {
     @InjectView(R.id.local_music_recy)
     RecyclerView mLocalMusicRecy;
     private DaoManager mDaoManager;
+    private List<Localmusic> mList;
 
-    public static LocalMusicNameFragment newInstance() {
-        LocalMusicNameFragment fragment = new LocalMusicNameFragment();
+    public LocalMusicNameFragment newInstance() {
+        LocalMusicNameFragment fragment = new LocalMusicNameFragment(mList);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
     }
 
 
-    public LocalMusicNameFragment() {
+    public LocalMusicNameFragment(List<Localmusic> list) {
         // Required empty public constructor
     }
 

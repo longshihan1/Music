@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.db.entity.Localmusic;
 import com.longshihan.lightly.music.R;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,7 +18,7 @@ import com.longshihan.lightly.music.R;
 public class FileFragment extends Fragment {
 
 
-    public FileFragment() {
+    public FileFragment(List<Localmusic> list) {
         // Required empty public constructor
     }
 

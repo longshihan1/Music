@@ -31,6 +31,10 @@ public class LocalMusicActivity extends AppCompatActivity {
 
     private List<String> titleList;  //标题列表数组
     private List<Localmusic> mList;
+    private LocalMusicNameFragment mLocalMusicNameFragment;
+    private AritstFragment mAritstFragment;
+    private AlbumFragment mAlbumFragment;
+    private FileFragment mFileFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +48,16 @@ public class LocalMusicActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        mLocalMusicNameFragment=new LocalMusicNameFragment(mList);
+        mAritstFragment=new AritstFragment(mList);
+        mAlbumFragment=new AlbumFragment(mList);
+        mFileFragment=new FileFragment(mList);
+
         list_fragment = new ArrayList<>();
-        list_fragment.add(new LocalMusicNameFragment());
-        list_fragment.add(new AritstFragment());
-        list_fragment.add(new AlbumFragment());
-        list_fragment.add(new FileFragment());
+        list_fragment.add(new LocalMusicNameFragment(mList));
+        list_fragment.add(new AritstFragment(mList));
+        list_fragment.add(new AlbumFragment(mList));
+        list_fragment.add(new FileFragment(mList));
 
         titleList = new ArrayList<>();
         titleList.add("单曲");
