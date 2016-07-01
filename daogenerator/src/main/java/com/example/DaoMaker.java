@@ -34,6 +34,7 @@ public class DaoMaker {
         entity.addStringProperty("year");//对应的数据库的列
         entity.addIntProperty("duration");//对应的数据库的列
         entity.addLongProperty("size");//
+        entity.addStringProperty("mine_type");//名称
     }
 
 }

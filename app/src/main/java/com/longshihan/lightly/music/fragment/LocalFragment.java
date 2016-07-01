@@ -1,17 +1,29 @@
 package com.longshihan.lightly.music.fragment;
 
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.db.entity.Localmusic;
+import com.longshihan.lightly.music.MusicApp;
 import com.longshihan.lightly.music.R;
-import com.longshihan.lightly.music.bean.Local_Resu;
+import com.longshihan.lightly.music.activity.LocalMusicActivity;
+import com.longshihan.lightly.music.utils.CommonUtils;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -22,6 +34,7 @@ import butterknife.OnClick;
  */
 public class LocalFragment extends Fragment {
 
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
 
     @InjectView(R.id.local_local)
     TextView mLocalLocal;
@@ -40,8 +53,9 @@ public class LocalFragment extends Fragment {
     @InjectView(R.id.local_setting)
     TextView mLocalSetting;
 
-   // private LocalMusic local_bean;
-    private Local_Resu mLocalResu;
+    private Localmusic local_bean;
+    private CommonUtils mCommonUtils;
+    private List<Localmusic> mList1;
     //private LocalDao userDao = new LocalDao(getActivity());
 
     public static LocalFragment newInstance() {
@@ -62,13 +76,14 @@ public class LocalFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_local, container, false);
         ButterKnife.inject(this, view);
-
+        verifyStoragePermissions(getActivity());
         initView();
         return view;
     }
 
     private void initView() {
-        mLocalResu=new Local_Resu();
+        mCommonUtils = new CommonUtils(getActivity());
+        mList1 = new ArrayList<>();
     }
 
 
@@ -84,6 +99,10 @@ public class LocalFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.local_local:
+                List<Localmusic> lists=mCommonUtils.listall();
+                Intent intent = new Intent(getActivity(), LocalMusicActivity.class);
+                intent.putExtra("list", (Serializable)lists);
+                startActivity(intent);
                 break;
             case R.id.local_msg:
                 break;
@@ -92,9 +111,10 @@ public class LocalFragment extends Fragment {
                                 .EXTERNAL_CONTENT_URI,
                         null, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
                 for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                   // local_bean=new LocalMusic();
+                    local_bean = new Localmusic();
                     //歌曲ID：MediaStore.Audio.Media._ID
-                    int id = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID));
+                    int id = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media
+                            ._ID));
                     //歌曲的名称 ：MediaStore.Audio.Media.TITLE
                     String title_name = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore
                             .Audio.Media.TITLE));
@@ -119,7 +139,10 @@ public class LocalFragment extends Fragment {
                     // 歌曲文件的大小 ：MediaStore.Audio.Media.SIZE
                     long size = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio
                             .Media.SIZE));
-                   /* local_bean.setId(id);
+                    String mime_type = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore
+                            .Audio.Media.MIME_TYPE));
+                    local_bean.setUid(id);
+                    local_bean.setId((long) id);
                     local_bean.setTitle_name(title_name);
                     local_bean.setAlbum(album);
                     local_bean.setArtist(artist);
@@ -127,12 +150,23 @@ public class LocalFragment extends Fragment {
                     local_bean.setDisplay_name(display_name);
                     local_bean.setYear(year);
                     local_bean.setDuration(duration);
-                    local_bean.setSize(size);*/
+                    local_bean.setSize(size);
+                 /*   // 歌曲格式
+                    if ("audio/mpeg".equals(mime_type)) {
+                        song.setType("mp3");
+                    } else if ("audio/x-ms-wma".equals(cursor.getString(7).trim())) {
+                        song.setType("wma");
+                    }*/
+                    mList1.add(local_bean);
+                    // mCommonUtils.insertMusic(local_bean);
                     //ormlite数据库框架
-                  //  mLocalResu.data.add(local_bean);
-                  //  userDao.addUser(local_bean);
+                    //  mLocalResu.data.add(local_bean);
+                    //  userDao.addUser(local_bean);
                 }
-             //   PreferenceUtils.setObject(getActivity(),mLocalResu);
+                cursor.close();
+                mCommonUtils.insertMultMusic(mList1);
+
+                //   PreferenceUtils.setObject(getActivity(),mLocalResu);
 
 
                 break;
@@ -148,4 +182,18 @@ public class LocalFragment extends Fragment {
                 break;
         }
     }
+
+
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        //访问媒体文件的权限
+        int WRITE_EXTERNAL_STORAGE = ActivityCompat.checkSelfPermission(activity, Manifest
+                .permission.WRITE_EXTERNAL_STORAGE);
+        if (WRITE_EXTERNAL_STORAGE != PackageManager.PERMISSION_GRANTED) {
+            // 我们没有权限，以提示用户
+            ActivityCompat.requestPermissions(activity, MusicApp.PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE);
+        }
+    }
+
 }

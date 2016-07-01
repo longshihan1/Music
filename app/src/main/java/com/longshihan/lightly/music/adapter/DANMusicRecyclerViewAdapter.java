@@ -1,7 +1,6 @@
 package com.longshihan.lightly.music.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.db.entity.Localmusic;
 import com.longshihan.lightly.music.R;
-import com.longshihan.lightly.music.bean.SortbangJavabean;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.SimpleImageLoadingListener;
 
 import java.util.List;
 
@@ -27,7 +24,7 @@ import java.util.List;
 public class DANMusicRecyclerViewAdapter extends RecyclerView.Adapter<DANMusicRecyclerViewAdapter.MyViewHolder> {
 
     private LayoutInflater mInflater;
-    private List<SortbangJavabean.SongListBean> mDatas;
+    private List<Localmusic> mDatas;
     private Context context;
    // private ImageLoader imageLoader;
 
@@ -43,7 +40,7 @@ public class DANMusicRecyclerViewAdapter extends RecyclerView.Adapter<DANMusicRe
         this.mOnItemClickLitener = mOnItemClickLitener;
     }
 
-    public DANMusicRecyclerViewAdapter(Context context, List<SortbangJavabean.SongListBean> mDatas) {
+    public DANMusicRecyclerViewAdapter(Context context, List<Localmusic> mDatas) {
         this.context = context;
         this.mDatas = mDatas;
         mInflater = LayoutInflater.from(context);
@@ -52,7 +49,7 @@ public class DANMusicRecyclerViewAdapter extends RecyclerView.Adapter<DANMusicRe
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mDatas.size();
     }
 
     //创建ViewHolder
@@ -66,10 +63,10 @@ public class DANMusicRecyclerViewAdapter extends RecyclerView.Adapter<DANMusicRe
     //绑定viewHolder
     @Override
     public void onBindViewHolder(final DANMusicRecyclerViewAdapter.MyViewHolder holder, final int position) {
-        SortbangJavabean.SongListBean msg=mDatas.get(position);
-        holder.itemname.setText(msg.getAuthor());
+        Localmusic msg=mDatas.get(position);
+        holder.itemname.setText(msg.getArtist());
        // imageLoader.DisplayImage(msg.getPic_big(), holder.img);
-        ImageLoader.getInstance().loadImage(msg.getPic_small(), new SimpleImageLoadingListener(){
+       /* ImageLoader.getInstance().loadImage(msg.getPic_small(), new SimpleImageLoadingListener(){
 
             @Override
             public void onLoadingComplete(String imageUri, View view,
@@ -77,8 +74,8 @@ public class DANMusicRecyclerViewAdapter extends RecyclerView.Adapter<DANMusicRe
                 super.onLoadingComplete(imageUri, view, loadedImage);
                 holder.img.setImageBitmap(loadedImage);
             }
-        });
-        holder.itemtitle.setText(msg.getAlbum_title());
+        });*/
+        holder.itemtitle.setText(msg.getTitle_name());
         if (mOnItemClickLitener != null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -12,10 +12,10 @@ import com.longshihan.lightly.music.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AlbumsFragment extends Fragment {
+public class AlbumFragment extends Fragment {
 
 
-    public AlbumsFragment() {
+    public AlbumFragment() {
         // Required empty public constructor
     }
 
@@ -24,7 +24,7 @@ public class AlbumsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_albums, container, false);
+        return inflater.inflate(R.layout.fragment_album, container, false);
     }
 
 }

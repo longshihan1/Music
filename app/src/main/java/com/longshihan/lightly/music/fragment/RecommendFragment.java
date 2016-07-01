@@ -172,9 +172,9 @@ public class RecommendFragment extends Fragment {
 
 
     private void initData() {
-        Net.sendHttpGet(context,handler1,"like", Constant.BAIDU+Constant.BAIDU_LIST,"1","10","0");
-        Net.sendHttpGet(context,handler2,"hot", Constant.TUIJIAN,null,null,null);
 
+        Net.sendHttpGet(context,handler2,"hot", Constant.TUIJIAN,null,null,null);
+        Net.sendHttpGet(context,handler1,"like", Constant.BAIDU+Constant.BAIDU_LIST,"1","10","0");
     }
 
     private void initView() {
@@ -198,6 +198,7 @@ public class RecommendFragment extends Fragment {
             bean_hot.setNum("111111" + i);
             lmusichot.add(bean_hot);
         }
+
 
         //添加消息处理
         mHomepageHotgrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -231,6 +232,7 @@ public class RecommendFragment extends Fragment {
         mFullyLinearLayoutManager = new FullyLinearLayoutManager(context);
         mFullyLinearLayoutManager.setOrientation(FullyLinearLayoutManager.VERTICAL);
         mHomepageLikerecy.setLayoutManager(mFullyLinearLayoutManager);//这里用线性显示 类似于listview
+
         //        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));//这里用线性宫格显示
         // 类似于grid view
         //        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
