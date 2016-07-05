@@ -3,6 +3,7 @@ package com.longshihan.lightly.music.utils;
 import android.content.Context;
 import android.util.Log;
 
+import com.db.dao.LocalmusicDao;
 import com.db.entity.Localmusic;
 import com.longshihan.lightly.music.db.DaoManager;
 
@@ -125,6 +126,26 @@ public class CommonUtils {
         //使用native sql进行查询操作
         List<Localmusic> list=mDaoManager.getDaoSession().queryRaw(Localmusic.class," where name like ? and _id >?",new String[]{"%李%","1002"});
         Log.e("----->", ""+list);
+    }
+
+
+    /**
+     * 条件查询列表
+     * @param size 大小
+     * @param durtion 容量
+     * @return
+     */
+    public List<Localmusic> query_list(int size,int durtion) {
+        //使用native sql进行查询操作
+        QueryBuilder<Localmusic> list=mDaoManager.getDaoSession().queryBuilder(Localmusic.class);
+        if (durtion!=0) {
+            list.where(LocalmusicDao.Properties.Duration.ge(durtion));
+        }
+        if (size!=0){
+            list.where(LocalmusicDao.Properties.Size.ge(size*1024));
+        }
+        Log.e("----->", ""+list);
+        return (List<Localmusic>) list;
     }
 
     /**
