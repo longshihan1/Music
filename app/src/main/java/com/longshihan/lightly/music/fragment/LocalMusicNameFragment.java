@@ -13,6 +13,7 @@ import com.db.entity.Localmusic;
 import com.longshihan.lightly.music.R;
 import com.longshihan.lightly.music.adapter.DANMusicRecyclerViewAdapter;
 import com.longshihan.lightly.music.db.DaoManager;
+import com.longshihan.lightly.music.server.AudioPlayer;
 import com.longshihan.lightly.music.utils.CommonUtils;
 import com.longshihan.lightly.music.view.FullyLinearLayoutManager;
 
@@ -44,33 +45,44 @@ public class LocalMusicNameFragment extends Fragment {
 
 
     public LocalMusicNameFragment(List<Localmusic> list) {
-        // Required empty public constructor
+        this.mList = list;
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_local_music_name, container, false);
         ButterKnife.inject(this, view);
-        context=getActivity();
+        context = getActivity();
 
         initView();
         return view;
     }
 
     private void initView() {
-      /*  mCommonUtils = new CommonUtils(context);
-        List<Localmusic> lists=mCommonUtils.listall();
-        */
-       /* mDaoManager = DaoManager.getInstance();
-        mDaoManager.init(getActivity().getApplication());*/
-      //  List<Localmusic> lists= mDaoManager.getDaoSession().loadAll(Localmusic.class);
         mFullyLinearLayoutManager = new FullyLinearLayoutManager(context);
         mFullyLinearLayoutManager.setOrientation(FullyLinearLayoutManager.VERTICAL);
         mLocalMusicRecy.setLayoutManager(mFullyLinearLayoutManager);
-
-     //   adapter = new DANMusicRecyclerViewAdapter(context,lists);
+        adapter = new DANMusicRecyclerViewAdapter(context, mList);
         mLocalMusicRecy.setAdapter(adapter);
+
+        adapter.setOnItemClickLitener(new DANMusicRecyclerViewAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AudioPlayer.play();
+                    }
+                }).start();
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
     }
 
     @Override

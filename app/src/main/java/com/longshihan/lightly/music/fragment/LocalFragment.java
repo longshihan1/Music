@@ -99,10 +99,16 @@ public class LocalFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.local_local:
-                List<Localmusic> lists=mCommonUtils.listall();
-                Intent intent = new Intent(getActivity(), LocalMusicActivity.class);
-                intent.putExtra("list", (Serializable)lists);
-                startActivity(intent);
+                try {
+                    List<Localmusic> lists=mCommonUtils.query_list(0,60);
+                    Intent intent = new Intent(getActivity(), LocalMusicActivity.class);
+                    intent.putExtra("list", (Serializable)lists);
+                    startActivity(intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+
                 break;
             case R.id.local_msg:
                 break;
